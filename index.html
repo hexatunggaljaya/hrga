@@ -58,13 +58,6 @@ ol li:before{content:counter(s);flex:none;width:28px;height:28px;border-radius:5
 var APP = "https://script.google.com/macros/s/AKfycbz-5XFskDHYoVNmUjreOByWcNSNm4WwjvLsMzcwc9c8XDmrkdjAwyRenEVQ6RuwxBHl0w/exec";
 document.getElementById('btn1').href = APP;
 document.getElementById('btn2').href = APP;
-if (/[?&]pasang/i.test(location.search)) {
-  /* Mode pasang: tidak dialihkan, alamat dibersihkan ke "/" supaya ikon di layar utama membuka hrga.hexatunggaljaya.co.id */
-  document.getElementById('buka').hidden = true;
-  document.getElementById('pasang').hidden = false;
-  try { history.replaceState(null, '', '/'); } catch (e) {}
-} else {
-  setTimeout(function () { location.replace(APP); }, 600);
-}
+setTimeout(function () { location.replace(APP); }, 600);
 </script>
 </body></html>
