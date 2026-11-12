@@ -7,8 +7,8 @@
 <meta name="theme-color" content="#002957">
 <meta name="apple-mobile-web-app-title" content="HR &amp; GA">
 <meta name="application-name" content="HR &amp; GA">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
-<link rel="icon" type="image/png" href="/apple-touch-icon.png?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
+<link rel="icon" type="image/png" href="/apple-touch-icon.png?v=3">
 <style>
 :root{--bg:#F3F6FA;--card:#fff;--tx:#0B1B2E;--mut:#5B6B7F;--pri:#0665CF;--line:#E3E9F1}
 @media (prefers-color-scheme:dark){:root{--bg:#071526;--card:#0E2238;--tx:#EAF1F9;--mut:#9FB2C8;--line:#1D3550}
@@ -28,6 +28,7 @@ ol li{counter-increment:s;display:flex;gap:12px;align-items:flex-start;padding:1
 ol li:last-child{border-bottom:1px solid var(--line)}
 ol li:before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:var(--pri);color:#fff;font-weight:800;display:grid;place-items:center;font-size:14px}
 [hidden]{display:none!important}
+.tip{color:var(--mut);font-size:13px;margin:16px 0 0}
 </style>
 </head><body>
 <main class="card">
@@ -45,19 +46,25 @@ ol li:before{content:counter(s);flex:none;width:28px;height:28px;border-radius:5
 </div>
 
 <div id="pasang" hidden>
-<p class="sub">Pasang Di Layar Utama iPhone</p>
-<ol>
-<li><span>Ketuk Tombol <b>Bagikan</b> (Kotak Dengan Panah Ke Atas) Di Safari</span></li>
-<li><span>Pilih <b>Tambah Ke Layar Utama</b></span></li>
-<li><span>Ketuk <b>Tambah</b> — Logo Hexa Akan Muncul Di Layar Utama</span></li>
-</ol>
-<a class="btn" id="btn2" href="#">Buka Aplikasi Sekarang</a>
+<p class="sub">Aplikasi Divisi HR &amp; GA PT. Hexa Tunggal Jaya</p>
+<a class="btn" id="btn2" href="#">Buka Aplikasi</a>
+<p class="tip">Simpan Di Layar Utama: Ketuk <b>Bagikan</b> Lalu <b>Tambah Ke Layar Utama</b></p>
 </div>
 </main>
 <script>
 var APP = "https://script.google.com/macros/s/AKfycbz-5XFskDHYoVNmUjreOByWcNSNm4WwjvLsMzcwc9c8XDmrkdjAwyRenEVQ6RuwxBHl0w/exec";
 document.getElementById('btn1').href = APP;
 document.getElementById('btn2').href = APP;
-setTimeout(function () { location.replace(APP); }, 600);
+var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+var dariIkon = /[?&]app\b/.test(location.search) || navigator.standalone;
+if (ios && !dariIkon) {
+  /* iPhone/iPad di Safari: tidak langsung dialihkan supaya bisa disimpan ke Layar Utama dengan logo HR & GA.
+     Alamat diberi penanda tersembunyi supaya ikon di Layar Utama langsung masuk aplikasi. */
+  document.getElementById('buka').hidden = true;
+  document.getElementById('pasang').hidden = false;
+  try { history.replaceState(null, '', '/?app'); } catch (e) {}
+} else {
+  setTimeout(function () { location.replace(APP); }, dariIkon ? 0 : 600);
+}
 </script>
 </body></html>
